@@ -1,12 +1,14 @@
 (function () {
 	'use strict';
+	var https = require('https');
+	var net = require('net');
+	var fs = require('fs');
 
 	var protocol = require('./protocol.js');
 
 	var registry = require('./registry.js');
 	registry.importProtocol(protocol);
 
-	var net = require('net');
 	var socketServer = net.createServer(function (socket) {
 		socket.setEncoding('utf8');
 
@@ -36,7 +38,12 @@
 	});
 
 	var WebSocketServer = require('ws').Server;
-	var webSocketServer = new WebSocketServer({port: 10012});
+	var secureServer = https.createServer({
+		key: fs.readFileSync('server.key'),
+		cert: fs.readFileSync('server.crt')
+	}).listen(10012);
+
+	var webSocketServer = new WebSocketServer({server: secureServer});
 
 	console.log('Listening for webSocket connections on ' + 10012);
 

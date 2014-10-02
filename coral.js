@@ -134,6 +134,7 @@
 			error = registry.register(sessionObject, data.networkName, data.className, data.name);
 			reply = replyMessage(data.type, error, error);
 			reply.yourIp = sessionObject.remoteAddress;
+			reply.yourId = sessionObject.getId();
 		}
 		else if (!registry.get(sessionObject.getId())) {
 			reply = replyMessage(data.type, true, "Not authorized");

@@ -53,21 +53,20 @@
 					if (data.subscribe) {
 						if (data.subscribe.type === protocol.TYPE.PRESENCE ||
 							data.subscribe.type === protocol.TYPE.PUBLISH) {
-							if (data.subscribe.to === protocol.SUBSCRIBE.TO.ALL ||
-								data.subscribe.to === protocol.SUBSCRIBE.TO.CLASS) {
+							if (data.subscribe.to === protocol.SUBSCRIBE.TO.ALL) {
+								return true;
+							}
+							else if(data.subscribe.to === protocol.SUBSCRIBE.TO.CLASS && data.subscribe.value) {
 								return true;
 							}
 						}
 					}
 					return false;
-				case this.TYPE.SERVER_ACK:
-					if (data) {
-						return true;
-					}
-					return false;
 				default:
 					return false;
 			}
+
+			console.error('You should not see this, error with protocol');
 		},
 	};
 

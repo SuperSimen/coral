@@ -1,0 +1,14 @@
+{
+  "name": "coral-server",
+  "version": "0.0.0",
+  "description": "",
+  "main": "coral.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simen Owesen-Lein",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^0.4.32"
+  }
+}

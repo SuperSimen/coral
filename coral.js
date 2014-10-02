@@ -31,10 +31,14 @@
 
 	socketServer.listen(10011, function() {
 		var address = socketServer.address();
+
+		console.log('Listening for socket connections on ' + address.port);
 	});
 
 	var WebSocketServer = require('ws').Server;
 	var webSocketServer = new WebSocketServer({port: 10012});
+
+	console.log('Listening for webSocket connections on ' + 10012);
 
 	webSocketServer.on('connection', function(webSocket) {
 

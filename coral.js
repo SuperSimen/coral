@@ -38,17 +38,22 @@
 	});
 
 	var WebSocketServer = require('ws').Server;
-	var secureServer = https.createServer({
-		key: fs.readFileSync('server.key'),
-		cert: fs.readFileSync('server.crt')
-	}).listen(10012);
 
-	var webSocketServer = new WebSocketServer({server: secureServer});
+	new WebSocketServer({port: 10012}).on('connection', onWebSocketConnection);
 
 	console.log('Listening for webSocket connections on ' + 10012);
 
-	webSocketServer.on('connection', function(webSocket) {
+	var secureServer = https.createServer({
+		key: fs.readFileSync('server.key'),
+		cert: fs.readFileSync('server.crt')
+	}).listen(10013);
 
+	new WebSocketServer({server: secureServer}).on('connection', onWebSocketConnection);
+
+	console.log('Listening for ssl webSocket connections on ' + 10013);
+
+
+	function onWebSocketConnection(webSocket) {
 		var sessionObject = createSessionObject(
 			function(object) {
 				webSocket.send(JSON.stringify(object) + "\n");
@@ -66,7 +71,7 @@
 		webSocket.on('close', function() {
 			onClose(sessionObject);
 		});
-	});
+	}
 
 	function onClose(sessionObject) {
 		var component = registry.get(sessionObject.getId());

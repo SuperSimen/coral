@@ -56,7 +56,12 @@
 	function onWebSocketConnection(webSocket) {
 		var sessionObject = createSessionObject(
 			function(object) {
-				webSocket.send(JSON.stringify(object) + "\n");
+				try {
+					webSocket.send(JSON.stringify(object) + "\n");
+				}
+				catch (error) {
+					console.error(error);
+				}
 			},
 			function() {
 				webSocket.close();

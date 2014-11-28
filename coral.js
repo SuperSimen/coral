@@ -60,7 +60,7 @@
 					webSocket.send(JSON.stringify(object) + "\n");
 				}
 				catch (error) {
-					console.error(error);
+					webSocket.close();
 				}
 			},
 			function() {
